@@ -13,17 +13,16 @@ class GameController extends Controller
 		$totalvotes = null;
 		$correct = null;
 		$gamesecs = null;
-		
+
 		$finished = null;
-		
+
 		if ($gamesess) {
 			$totalitems = count($gamesess->itemlistarr);
 			$totalvotes = $gamesess->listpos;
 			$correct = Result::model()->count('gamesessid = :gamesessid AND guessprop = corrprop', array(':gamesessid' => $gamesess->id));
 			$gamesecs = strtotime($gamesess->lastupdate) - strtotime($gamesess->startdate);
 			$finished = ($gamesess->listpos >= count($gamesess->itemlistarr));
-			
-			
+
 			if ($_POST) {
 				$h->gameid = $gamesess->gameid;
 				$h->name = $_POST['name'];
@@ -32,28 +31,28 @@ class GameController extends Controller
 				$h->correct = $correct;
 				$h->starttime = $gamesess->startdate;
 				$h->gamesecs = $gamesecs;
-				
+
 				if ($h->validate()) {
 					$h->save();
-					
+
 					unset(Yii::app()->request->cookies['gamesess']);
-					
+
 					$this->redirect('/game/hall');
 				}
 			}
 		}
-		
+
 		$top10_1 = Hall::model()->findAll(array(
 				'condition' => 'correct > 0',
 				'order' => '(gamesecs / correct)',
 				'limit' => 10
 			));
-		
+
 		$top10_2 = Hall::model()->findAll(array(
 				'order' => '(correct / totalitems) DESC',
 				'limit' => 10
 			));
-		
+
 		$this->render('hall', array(
 			'model' => $h,
 			'gamesess' => $gamesess,
@@ -69,7 +68,7 @@ class GameController extends Controller
 
 	public function actionIndex() {
 		$gamesess = Gamesess::init_gamesess();
-		
+
 		$games = Game::model()->findAll();
 		$this->render('index', array(
 			'games' => $games,
@@ -79,20 +78,20 @@ class GameController extends Controller
 
 	public function actionPlay() {
 		$gamesess = Gamesess::init_gamesess();
-		
+
 		if ($gamesess) {
 			if ($gamesess->listpos >= count($gamesess->itemlistarr)) {
 				$this->redirect('/game/hall');
 			}
-			
+
 			$curr = $gamesess->itemlistarr[$gamesess->listpos];
-			
+
 			$curr_item = Item::model()->findByPk($curr);
-			
+
 			$prev_vote = null;
-			
+
 			$correct = Result::model()->count('gamesessid = :gamesessid AND guessprop = corrprop', array(':gamesessid' => $gamesess->id));
-			
+
 			if ($gamesess->listpos > 0) {
 				$prev_vote = Result::model()
 					->with('item', 'guessprop0', 'corrprop0')
@@ -101,12 +100,12 @@ class GameController extends Controller
 						'params' => array(':gamesessid' => $gamesess->id),
 						'order' => 'tm desc'));
 			}
-			
+
 			$props = Prop::model()->findAll(
 				'gameid = :gameid',
 				array(':gameid' => (int) $gamesess->gameid)
 				);
-			
+
 			$this->render('play', array(
 				'curr' => $curr_item,
 				'prev_vote' => $prev_vote,
@@ -122,13 +121,13 @@ class GameController extends Controller
 	public function actionRestart() {
 		$gamesess = Gamesess::init_gamesess();
 		$this->actionStart($gamesess->gameid);
-		
+
 		$this->redirect('/game/play');
 	}
 
 	public function actionStart($gameid) {
 		if ((int) $gameid) {
-			
+
 			/* get randomized items list */
 			$items = Item::model()->findAll('gameid = :gameid', array(':gameid' => (int) $gameid));
 			$itemlist = array();
@@ -137,10 +136,10 @@ class GameController extends Controller
 			}
 			shuffle($itemlist);
 			$itemlist = implode(',', $itemlist);
-			
+
 			/* and init new game session */
 			Gamesess::new_gamesess($gameid, $itemlist);
-			
+
 			$this->redirect('/game/play');
 		}
 	}
@@ -148,9 +147,9 @@ class GameController extends Controller
 	public function actionVote($pos, $prop) {
 		$gamesess = Gamesess::init_gamesess();
 		if ($gamesess && $gamesess->listpos == $pos) {
-			
+
 			$corritem = Item::model()->findByPk($gamesess->itemlistarr[$pos]);
-			
+
 			$r = new Result();
 			$r->gamesessid = $gamesess->id;
 			$r->itemid = $gamesess->itemlistarr[$pos];
@@ -166,7 +165,7 @@ class GameController extends Controller
 			$this->redirect('/game/play');
 		}
 	}
-	
+
 	// Uncomment the following methods and override them if needed
 	/*
 	public function filters()
