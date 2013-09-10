@@ -25,7 +25,10 @@
 			<p><a class="btn btn-success" href="/game/start?gameid=1">Започни нова игра</a></p>
 		<?php endif; ?>
 	</form>
-	
+	<p>
+		<a href="https://twitter.com/intent/tweet?button_hashtag=mpbook&text=<?=urlencode('Познах от коя партия са ' . $correct . ' от ' . $gamesess->listpos . ' депутата в играта "Опознай депутата"') ?>" class="twitter-hashtag-button" data-size="large" data-url="http://mpbook.obshtestvo.bg/">Tweet #mpbook</a>
+		<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+	</p>
 </div>
 <?php endif; ?>
 

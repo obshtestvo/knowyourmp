@@ -1,7 +1,7 @@
 <?php /* @var $this Controller */ ?>
 <div class="ccontent">
 	<?php if ($curr): ?>
-		<p><img src="<?php echo $curr->photo ?>" /></p>
+		<p><img src="<?php echo $curr->photo ?>" width="150" height="190" /></p>
 		<p><small><?=$curr->name ?></small></p>
 		<p>
 			<?php foreach ($props as $v): ?>
@@ -17,7 +17,7 @@
 			<?php endif;?>
 		<?php endif; ?>
 		
-		<p><a class="btn btn-primary" href="/game/hall">Не мога повече, към класирането</a></p>
+		<p><a class="btn btn-primary" href="/game/hall">Не мога повече, към класирането!</a></p>
 		
 		<p>Познали сте <strong><?=$correct ?> от <?=$gamesess->listpos ?></strong> (или <?=round(($correct / count($gamesess->itemlistarr)) * 100, 2) ?>%) и ви остават <?=count($gamesess->itemlistarr) - $gamesess->listpos ?> депутата</p>
 		
@@ -48,7 +48,7 @@
 			<?php foreach($prev_vote as $vote):?>
 				<tr class="<?=($vote->corrprop0->name == $vote->guessprop0->name ? 'success' : 'danger') ?>">
 					<td><img width="40" src="<?=$vote->item->photo ?>" /></td>
-					<td><?=mb_convert_case($vote->item->name, MB_CASE_TITLE, 'utf-8') ?></td>
+					<td><?=$vote->item->name ?></td>
 					<td><?=$vote->corrprop0->name ?></td>
 					<td><span class="label label-<?=($vote->corrprop0->name == $vote->guessprop0->name ? 'success' : 'danger') ?>"><span class="glyphicon glyphicon-<?=($vote->corrprop0->name == $vote->guessprop0->name ? 'ok' : 'remove') ?>"></span> <?=$vote->guessprop0->name ?></span></td>
 				</tr>
