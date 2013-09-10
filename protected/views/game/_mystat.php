@@ -1,0 +1,2 @@
+<p>Познали сте <strong><?=$correct ?> от <?=$gamesess->listpos ?></strong> (или <?=round(($correct / count($gamesess->itemlistarr)) * 100, 2) ?>%) и ви остават <?=count($gamesess->itemlistarr) - $gamesess->listpos ?> депутата</p>
+<p>Започнали сте играта на <?=$gamesess->startdate ?> и сте играли <strong><?=(strtotime($gamesess->lastupdate) - strtotime($gamesess->startdate)) ?> секунди</strong>.</p>

@@ -30,6 +30,6 @@
 	<div class="col-md-4">
 		<h2>Автори и съдържание</h2>
 
-		<p>Тази игра е разработена от <a href="https://github.com/hambai">Камен</a> в свободното му време и всеки е добре дошъл да се включи в доработката й. Кодът е отворен и <a href="https://github.com/obshtestvo/knowyourmp">достъпен в Джитхюб</a>. Източник на снимките и информацията за депутатите е <a href="http://www.government.bg/">http://www.government.bg/</a>.</p>
+		<p>Тази игра е разработена от <a href="https://github.com/hambai">Камен</a> в свободното му време и всеки е добре дошъл да се включи в доработката й. Кодът е отворен и <a href="https://github.com/obshtestvo/knowyourmp">достъпен в Джитхюб</a>. Източник на снимките и информацията за депутатите е <a href="http://www.parliament.bg/">parliament.bg</a>.</p>
 	</div>
 </div>

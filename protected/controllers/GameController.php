@@ -9,28 +9,21 @@ class GameController extends Controller
 	public function actionHall() {
 		$gamesess = Gamesess::init_gamesess();
 		$h = new Hall();
-		$totalitems = null;
-		$totalvotes = null;
 		$correct = null;
-		$gamesecs = null;
 
 		$finished = null;
 
 		if ($gamesess) {
-			$totalitems = count($gamesess->itemlistarr);
-			$totalvotes = $gamesess->listpos;
 			$correct = Result::model()->count('gamesessid = :gamesessid AND guessprop = corrprop', array(':gamesessid' => $gamesess->id));
-			$gamesecs = strtotime($gamesess->lastupdate) - strtotime($gamesess->startdate);
 			$finished = ($gamesess->listpos >= count($gamesess->itemlistarr));
 
 			if ($_POST) {
 				$h->gameid = $gamesess->gameid;
 				$h->name = $_POST['name'];
-				$h->totalitems = $totalitems;
-				$h->totalvotes = $totalvotes;
+				$h->totalitems = count($gamesess->itemlistarr);
 				$h->correct = $correct;
 				$h->starttime = $gamesess->startdate;
-				$h->gamesecs = $gamesecs;
+				$h->gamesecs = strtotime($gamesess->lastupdate) - strtotime($gamesess->startdate);
 
 				if ($h->validate()) {
 					$h->save();
@@ -42,26 +35,17 @@ class GameController extends Controller
 			}
 		}
 
-		$top10_1 = Hall::model()->findAll(array(
+		$top10 = Hall::model()->findAll(array(
 				'condition' => 'correct > 0',
-				'order' => '(gamesecs / correct)',
+				'order' => 'correct desc, gamesecs',
 				'limit' => 10
 			));
-
-		$top10_2 = Hall::model()->findAll(array(
-				'order' => '(correct / totalitems) DESC',
-				'limit' => 10
-			));
-
+		
 		$this->render('hall', array(
 			'model' => $h,
 			'gamesess' => $gamesess,
-			'totalitems' => $totalitems,
-			'totalvotes' => $totalvotes,
 			'correct' => $correct,
-			'gamesecs' => $gamesecs,
-			'top10_1' => $top10_1,
-			'top10_2' => $top10_2,
+			'top10' => $top10,
 			'finished' => $finished
 			));
 	}
@@ -78,17 +62,16 @@ class GameController extends Controller
 
 	public function actionPlay() {
 		$gamesess = Gamesess::init_gamesess();
+		$curr_item = null;
+		$prev_vote = null;
 
 		if ($gamesess) {
-			if ($gamesess->listpos >= count($gamesess->itemlistarr)) {
-				$this->redirect('/game/hall');
+			
+			// there are more items to guess
+			if ($gamesess->listpos < count($gamesess->itemlistarr)) {
+				$curr_id = $gamesess->itemlistarr[$gamesess->listpos];
+				$curr_item = Item::model()->findByPk($curr_id);
 			}
-
-			$curr = $gamesess->itemlistarr[$gamesess->listpos];
-
-			$curr_item = Item::model()->findByPk($curr);
-
-			$prev_vote = null;
 
 			$correct = Result::model()->count('gamesessid = :gamesessid AND guessprop = corrprop', array(':gamesessid' => $gamesess->id));
 
@@ -117,6 +100,8 @@ class GameController extends Controller
 				'props' => $props,
 				'gamesess' => $gamesess,
 				'correct' => $correct,
+				'totalitems' => 100,
+				'gamesecs' => 100,
 				));
 		} else {
 			$this->redirect('/game/start?gameid=1');

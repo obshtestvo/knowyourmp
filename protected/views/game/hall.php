@@ -8,8 +8,9 @@
 	<?php else: ?>
 		<h2>Не се отказвайте толкова рано!</h2>
 	<?php endif; ?>
-	<p>Познали сте партиите на <strong><?=$correct ?></strong> от <?=$totalitems ?> депутата или <?=round(($correct / $totalitems) * 100, 2) ?>%.</p>
-	<p>Започнали сте играта на <?=$gamesess->startdate ?> и сте играли <strong><?=$gamesecs ?></strong> секунди</p>
+	
+	<?php $this->renderPartial('_mystat', array('correct' => $correct, 'gamesess' => $gamesess)); ?>
+	
 	<p>За да се запишете в класацията, моля, въведете име или псевдоним в полето.</p>
 
 	<form role="form" method="POST">
@@ -28,44 +29,20 @@
 </div>
 <?php endif; ?>
 
-<h2>ТОП 10 по средно време на познат</h2>
+<h2>ТОП 10</h2>
 
 <table class="table table-striped">
 	<thead>
 		<tr>
-			<th>Позиция</th>
+			<th>№</th>
 			<th>Име</th>
-			<th>Брой познати</th>
-			<th>Време за игра</th>
-			<th>Начало на играта</th>
+			<th>Познати</th>
+			<th>Време (сек.)</th>
+			<th>Дата</th>
 		</tr>
 	</thead>
 	<tbody>
-		<?php foreach($top10_1 as $k => $v): ?>
-			<tr>
-				<td><?=($k+1) ?></td>
-				<td><?=CHtml::encode($v->name) ?></td>
-				<td><?=$v->correct ?> / <?=$v->totalitems ?></td>
-				<td><?=$v->gamesecs ?></td>
-				<td><?=$v->starttime ?></td>
-			</tr>
-		<?php endforeach; ?>
-	</tbody>
-</table>
-
-<h2>ТОП 10 по брой познати</h2>
-<table class="table table-striped">
-	<thead>
-		<tr>
-			<th>Позиция</th>
-			<th>Име</th>
-			<th>Брой познати</th>
-			<th>Време за игра</th>
-			<th>Начало на играта</th>
-		</tr>
-	</thead>
-	<tbody>
-		<?php foreach($top10_2 as $k => $v): ?>
+		<?php foreach($top10 as $k => $v): ?>
 			<tr>
 				<td><?=($k+1) ?></td>
 				<td><?=CHtml::encode($v->name) ?></td>
