@@ -56,8 +56,8 @@
 </head>
 
 <body>
-	<div class="container">
-		<nav class="navbar navbar-inverse" role="navigation">
+	<nav class="navbar navbar-inverse" role="navigation">
+		<div class="container">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
 					<span class="sr-only">Навигация</span>
@@ -79,8 +79,10 @@
 					));
 				?>
 			</div>
-		</nav>
+		</div>
+	</nav>
 
+	<div class="container">
 		<?php echo $content; ?>
 	</div>
 </body>
