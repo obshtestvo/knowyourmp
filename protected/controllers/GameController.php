@@ -106,6 +106,11 @@ class GameController extends Controller
 				array(':gameid' => (int) $gamesess->gameid)
 				);
 
+			// Tell the browser to never cache this page
+			header("Cache-Control: no-cache, must-revalidate"); //HTTP 1.1
+			header("Pragma: no-cache"); //HTTP 1.0
+			header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
+
 			$this->render('play', array(
 				'curr' => $curr_item,
 				'prev_vote' => $prev_vote,
