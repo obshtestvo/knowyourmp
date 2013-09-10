@@ -1,0 +1,36 @@
+<?php
+
+// Define your deployments here.
+// At least one definition is required.
+//
+// You can have multiple definitions of,
+// say, a demo deployment, a staging server
+// and different production servers.
+//
+// See deployment.php.example for full
+// documentation of the fields below.
+
+$deployments = array(
+	'demo' => array(
+		// General FTP details.
+		'ftp_host'  => 'demo.example.com',
+		'username'  => 'ftp_user_for_demo',
+		'password'  => 'secret',
+
+		// If the default root path of the
+		// FTP user defined above is different
+		// from the project's root, specify the
+		// path here.
+		'root_path' => '/',
+	),
+
+	// Define more deployment targets below,
+	// if needed. "live" is the name of the
+	// deployment.
+	'live' => array(
+		'ftp_host'  => 'www.example.com',
+		'username'  => 'someone',
+		'password'  => 'secret',
+		'root_path' => '/',
+	),
+);

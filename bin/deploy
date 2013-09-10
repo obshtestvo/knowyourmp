@@ -1,0 +1,73 @@
+#!/usr/bin/env php
+<?
+
+// This script expects that a MigrationsSchema table preexists and is up to date.
+// Dependencies: lftp
+$local_root_path = realpath(dirname(__FILE__) . '/..');
+$deployments_config_path = "$local_root_path/protected/config/deployments.php";
+
+// Make the deployment work on Windows under Cygwin
+if (strpos($local_root_path, ':\\') !== false) {
+	$local_root_path = str_replace('\\', '/', str_replace(':\\', '/', $local_root_path));
+	$local_root_path = '/cygdrive/' . $local_root_path;
+}
+
+restore_error_handler();
+ini_set('html_errors', false);
+if (function_exists('date_default_timezone_set')) {
+	@date_default_timezone_set('Europe/Sofia');
+}
+
+if (!is_file($deployments_config_path)) {
+	error_log("The deployments config file is missing. It should be in $deployments_config_path");
+	error_log("You can copy it from $deployments_config_path.example");
+	exit(2);
+}
+
+require($deployments_config_path);
+
+if (!isset($deployments) or !is_array($deployments) or empty($deployments)) {
+	error_log("No valid deployment definitions found. You must define at least one deployment target.");
+	error_log("For more information, please see $deployments_config_path.example");
+	exit(3);
+}
+
+if ($argc < 2) {
+	error_log("Usage: " . __FILE__ . " deployment_name");
+	error_log('Available deployment names: ' . join(', ', array_keys($deployments)));
+	exit(1);
+}
+
+// Check if all arguments given are valid deployment names
+for ($i = 1; $i < count($argv); $i++) {
+	$deployment = $argv[$i];
+	if (!isset($deployments[$deployment])) {
+		error_log("Unknow deployment name: $deployment");
+		error_log("Available deployments are: " . join(', ', array_keys($deployments)));
+		exit(2);
+	}
+}
+
+for ($i = 1; $i < count($argv); $i++) {
+	$deployment = $argv[$i];
+	$config = $deployments[$deployment];
+
+	echo "Deploying $deployment\n";
+	echo "Uploading code via FTP...\n";
+
+	$excluded_files = '--exclude=.git/ --exclude=.DS_Store --exclude=.gitignore --exclude=runtime/ --exclude=protected/config/* --exclude=bin/';
+	$ftp_commands = join(' && ', array(
+		'set ssl:verify-certificate no',
+		"open {$config['username']}:{$config['password']}@{$config['ftp_host']}",
+		"mirror -v -R $excluded_files $local_root_path/ {$config['root_path']}",
+		'close',
+	));
+	passthru("bash --login -c \"lftp -c '$ftp_commands'\"", $exit_code);
+
+	if ($exit_code === 0) {
+		echo "Done.\n";
+	} else {
+		echo "Uploading code has failed with an exit status of $exit_code. Deploy aborted.\n";
+		exit(3);
+	}
+}
