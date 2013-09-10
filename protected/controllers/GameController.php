@@ -156,14 +156,6 @@ class GameController extends Controller
 		}
 	}
 	
-	public function actionNameupdate() {
-		$items = Item::model()->findAll();
-		foreach($items as $i) {
-			$i->name = mb_convert_case($i->name, MB_CASE_TITLE, 'utf-8');
-			$i->save();
-		}
-	}
-
 	// Uncomment the following methods and override them if needed
 	/*
 	public function filters()
