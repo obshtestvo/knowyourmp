@@ -10,48 +10,13 @@
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 
 	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />
 
+	<!-- project styles -->
+	<link rel="stylesheet" href="/css/main.css" />
+	
 	<!-- Latest compiled and minified JavaScript -->
 	<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-
-	<style>
-		.jumbotron {
-			text-align: center;
-			background-color: transparent;
-		}
-		.jumbotron .btn {
-			font-size: 21px;
-			padding: 14px 24px;
-		}
-		.ccontent {
-			text-align: center;
-		}
-		.btn-num1 {
-			background-color: #d00000;
-			border-color: #c00000;
-			color: #fff;
-		}
-		.btn-num2 {
-			background-color: #8F0596;
-			border-color: #7F0086;
-			color: #fff;
-		}
-		.btn-num3 {
-			background-color: #4759DE;
-			border-color: #3749CE;
-			color: #fff;
-		}
-		.btn-num4 {
-			background-color: #735510;
-			border-color: #634500;
-			color: #fff;
-		}
-		.form {
-			background-color: #eee;
-			padding: 20px;
-		}
-	</style>
 
 </head>
 
@@ -85,5 +50,10 @@
 	<div class="container">
 		<?php echo $content; ?>
 	</div>
+<script>
+/mobile/i.test(navigator.userAgent) && !window.location.hash && setTimeout(function () {
+  window.scrollTo(0, 1);
+}, 200);
+</script>
 </body>
 </html>
