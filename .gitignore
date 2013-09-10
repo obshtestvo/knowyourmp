@@ -2,3 +2,6 @@ assets/
 protected/runtime/
 themes/classic/views/
 protected/config/main.php
+
+# Who doesn't love OSX's file system?
+.DS_Store
