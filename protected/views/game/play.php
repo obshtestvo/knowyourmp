@@ -48,7 +48,7 @@
 		<tbody>
 			<?php foreach($prev_vote as $vote):?>
 				<tr class="<?=($vote->corrprop0->name == $vote->guessprop0->name ? 'success' : 'danger') ?>">
-					<td><img width="40" src="<?=$vote->item->photo ?>" /></td>
+					<td><img width="40" height="51" src="<?=$vote->item->photo ?>" /></td>
 					<td><?=$vote->item->name ?></td>
 					<td><?=$vote->corrprop0->name ?></td>
 					<td><span class="label label-<?=($vote->corrprop0->name == $vote->guessprop0->name ? 'success' : 'danger') ?>"><span class="glyphicon glyphicon-<?=($vote->corrprop0->name == $vote->guessprop0->name ? 'ok' : 'remove') ?>"></span> <?=$vote->guessprop0->name ?></span></td>
