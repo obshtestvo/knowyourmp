@@ -55,7 +55,7 @@ for ($i = 1; $i < count($argv); $i++) {
 	echo "Deploying $deployment\n";
 	echo "Uploading code via FTP...\n";
 
-	$excluded_files = '--exclude=.git/ --exclude=.DS_Store --exclude=.gitignore --exclude=runtime/ --exclude=protected/config/* --exclude=bin/';
+	$excluded_files = '--exclude=.git/ --exclude=.DS_Store --exclude=.gitignore --exclude=runtime/ --exclude=protected/config/* --exclude=bin/ --exclude=assets/';
 	$ftp_commands = join(' && ', array(
 		'set ssl:verify-certificate no',
 		"open {$config['username']}:{$config['password']}@{$config['ftp_host']}",
