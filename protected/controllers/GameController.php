@@ -149,6 +149,20 @@ class GameController extends Controller
 		}
 	}
 	
+	public function actionStats() {
+		$sql1 = 'SELECT i.name, i.photo, p.name as propname, count(*) as totalcnt, SUM(case when r.guessprop = r.corrprop then 1 else 0 end) as correct
+			FROM item i
+			JOIN result r ON r.itemid = i.id
+			JOIN prop p on i.corrprop = p.id 
+			GROUP BY i.name, i.photo, p.name
+			ORDER BY SUM(case when r.guessprop = r.corrprop then 1 else 0 end)/count(*), i.name';
+				
+		$stats1 = Yii::app()->db->createCommand($sql1)->queryAll();
+		$this->render('stats', array(
+			'stats1' => $stats1,
+			));
+	}
+	
 	// Uncomment the following methods and override them if needed
 	/*
 	public function filters()
