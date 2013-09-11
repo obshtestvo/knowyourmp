@@ -20,7 +20,7 @@
 		<?php if ($gamesess->listpos > count($gamesess->itemlistarr) * 0.05): ?>
 			<p><a class="btn btn-primary" href="/game/hall">Не мога повече, към класирането!</a></p>
 		<?php endif; ?>
-		<p>Познали сте <strong><?=$correct ?> от <?=$gamesess->listpos ?></strong> (или <?=round(($correct / count($gamesess->itemlistarr)) * 100, 2) ?>%) и ви остават <?=count($gamesess->itemlistarr) - $gamesess->listpos ?> депутата</p>
+		<p>Познали сте <strong><?=$correct ?> от <?=$gamesess->listpos ?></strong>, остават <?=count($gamesess->itemlistarr) - $gamesess->listpos ?> депутата</p>
 		
 	<?php else: ?>
 		<h1>ПОЗДРАВЛЕНИЯ!</h1>

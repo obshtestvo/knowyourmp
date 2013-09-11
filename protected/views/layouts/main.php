@@ -1,4 +1,9 @@
-<?php /* @var $this Controller */ ?>
+<?php /* @var $this Controller */
+// Tell the browser to never cache this page
+header("Cache-Control: no-cache, must-revalidate"); //HTTP 1.1
+header("Pragma: no-cache"); //HTTP 1.0
+header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
+?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
@@ -38,7 +43,6 @@
 					'htmlOptions' => array('class' => 'nav navbar-nav'),
 					'items'=>array(
 							array('label'=>'Начало', 'url'=>array('/game/index')),
-							array('label'=>'Играта', 'url'=>array('/game/play')),
 							array('label'=>'Класиране', 'url'=>array('/game/hall')),
 						),
 					));

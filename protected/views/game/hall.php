@@ -32,7 +32,7 @@
 		</p>
 	</div>
 	<?php else: ?>
-	<p>За да се запишете в класацията трябва да изиграете поне 5% от депутатите.</p>
+	<p>За да се запишете в класацията трябва да поиграете още малко.</p>
 	<p><a href="/game/play" class="btn btn-primary">Обратно към играта</a></p>
 	<?php endif; ?>
 <?php endif; ?>
@@ -53,8 +53,8 @@
 		<?php foreach($top10 as $k => $v): ?>
 			<tr>
 				<td><?=($k+1) ?></td>
-				<td><?=CHtml::encode($v->name) ?></td>
-				<td><?=$v->correct ?> / <?=$v->totalitems ?></td>
+				<td><strong><?=CHtml::encode($v->name) ?></strong></td>
+				<td><?=$v->correct ?></td>
 				<td><?=$v->gamesecs ?></td>
 				<td><?=$v->starttime ?></td>
 			</tr>
