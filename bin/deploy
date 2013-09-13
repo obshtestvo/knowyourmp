@@ -55,10 +55,13 @@ for ($i = 1; $i < count($argv); $i++) {
 	echo "Deploying $deployment\n";
 	echo "Uploading code via FTP...\n";
 
+	$escaped_username = urlencode($config['username']);
+	$escaped_password = urlencode($config['password']);
+
 	$excluded_files = '--exclude=.git/ --exclude=.DS_Store --exclude=.gitignore --exclude=runtime/ --exclude=protected/config/* --exclude=bin/ --exclude=assets/';
 	$ftp_commands = join(' && ', array(
 		'set ssl:verify-certificate no',
-		"open {$config['username']}:{$config['password']}@{$config['ftp_host']}",
+		"open {$escaped_username}:{$escaped_password}@{$config['ftp_host']}",
 		"mirror -v -R $excluded_files $local_root_path/ {$config['root_path']}",
 		'close',
 	));
